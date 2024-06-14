@@ -31,9 +31,7 @@
             CreateAccountTitleLabel = new Label();
             BackToLoginButton = new Button();
             AccountOwnerEmailLabel = new Label();
-            label2 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            EmailInputTextbox = new TextBox();
             CreateNewAccountButton = new Button();
             SuspendLayout();
             // 
@@ -55,38 +53,23 @@
             BackToLoginButton.TabIndex = 1;
             BackToLoginButton.Text = "Back";
             BackToLoginButton.UseVisualStyleBackColor = true;
+            BackToLoginButton.Click += BackToLoginButton_Click;
             // 
             // AccountOwnerEmailLabel
             // 
             AccountOwnerEmailLabel.AutoSize = true;
-            AccountOwnerEmailLabel.Location = new Point(12, 52);
+            AccountOwnerEmailLabel.Location = new Point(22, 68);
             AccountOwnerEmailLabel.Name = "AccountOwnerEmailLabel";
             AccountOwnerEmailLabel.Size = new Size(39, 15);
             AccountOwnerEmailLabel.TabIndex = 2;
             AccountOwnerEmailLabel.Text = "Email:";
             // 
-            // label2
+            // EmailInputTextbox
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 81);
-            label2.Name = "label2";
-            label2.Size = new Size(99, 15);
-            label2.TabIndex = 3;
-            label2.Text = "Account Balance:";
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(57, 49);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(253, 23);
-            textBox1.TabIndex = 5;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(117, 78);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(193, 23);
-            textBox2.TabIndex = 6;
+            EmailInputTextbox.Location = new Point(67, 65);
+            EmailInputTextbox.Name = "EmailInputTextbox";
+            EmailInputTextbox.Size = new Size(253, 23);
+            EmailInputTextbox.TabIndex = 5;
             // 
             // CreateNewAccountButton
             // 
@@ -96,6 +79,7 @@
             CreateNewAccountButton.TabIndex = 7;
             CreateNewAccountButton.Text = "Create New Account";
             CreateNewAccountButton.UseVisualStyleBackColor = true;
+            CreateNewAccountButton.Click += CreateNewAccountButton_Click;
             // 
             // CreateAccountForm
             // 
@@ -103,9 +87,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(339, 167);
             Controls.Add(CreateNewAccountButton);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
-            Controls.Add(label2);
+            Controls.Add(EmailInputTextbox);
             Controls.Add(AccountOwnerEmailLabel);
             Controls.Add(BackToLoginButton);
             Controls.Add(CreateAccountTitleLabel);
@@ -120,9 +102,7 @@
         private Label CreateAccountTitleLabel;
         private Button BackToLoginButton;
         private Label AccountOwnerEmailLabel;
-        private Label label2;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox EmailInputTextbox;
         private Button CreateNewAccountButton;
     }
 }
