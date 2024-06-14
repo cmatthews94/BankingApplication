@@ -14,12 +14,13 @@ namespace BankingApplicationInteractionForm
         [STAThread]
         static void Main()
         {
+            ApplicationConfiguration.Initialize();
+
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
             var loginForm = serviceProvider.GetRequiredService<LoginForm>();
-
             Application.Run(loginForm);
         }
         private static void ConfigureServices(IServiceCollection services)

@@ -37,8 +37,6 @@ namespace BankingApplication.LogicClasses
             //alters basic info
             existingUser.EmailAddress = user.EmailAddress;
             existingUser.Password = user.Password;
-
-            //alters which accounts belong to the user ***to fix***
             _context.SaveChanges();
         }
         public void DeleteUserByUserId(int userId)
@@ -48,4 +46,3 @@ namespace BankingApplication.LogicClasses
         }
     }
 }
-    
