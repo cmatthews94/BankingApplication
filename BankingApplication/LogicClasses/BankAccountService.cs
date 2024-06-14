@@ -45,5 +45,23 @@ namespace BankingApplication.LogicClasses
             _context.BankAccounts.Remove(RetrieveAccountByAccountNumber(accountNumber));
             _context.SaveChanges();
         }
+        public void CreateNewAccountForUserId(BankUser user)
+        {
+            if(user.UserAccounts.Count() < 3)
+            {
+                var newAccount = new BankAccount()
+                {
+                    UserId = user.UserId,
+                    Balance = 0.00m
+                };
+
+                user.UserAccounts.Add(newAccount);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("user has reached maximum number of accounts");
+            }
+        }
     }
 }

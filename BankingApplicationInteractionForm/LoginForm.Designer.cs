@@ -30,8 +30,8 @@
         {
             CreateNewUserButton = new Button();
             CreateNewAccountButton = new Button();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            LoginEmailTextbox = new TextBox();
+            LoginPasswordTextbox = new TextBox();
             LoginEmailLabel = new Label();
             LoginPasswordLabel = new Label();
             LoginButton = new Button();
@@ -58,19 +58,19 @@
             CreateNewAccountButton.UseVisualStyleBackColor = true;
             CreateNewAccountButton.Click += CreateNewAccountButton_Click;
             // 
-            // textBox1
+            // LoginEmailTextbox
             // 
-            textBox1.Location = new Point(95, 113);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(232, 23);
-            textBox1.TabIndex = 7;
+            LoginEmailTextbox.Location = new Point(95, 113);
+            LoginEmailTextbox.Name = "LoginEmailTextbox";
+            LoginEmailTextbox.Size = new Size(232, 23);
+            LoginEmailTextbox.TabIndex = 7;
             // 
-            // textBox2
+            // LoginPasswordTextbox
             // 
-            textBox2.Location = new Point(95, 142);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(232, 23);
-            textBox2.TabIndex = 8;
+            LoginPasswordTextbox.Location = new Point(95, 142);
+            LoginPasswordTextbox.Name = "LoginPasswordTextbox";
+            LoginPasswordTextbox.Size = new Size(232, 23);
+            LoginPasswordTextbox.TabIndex = 8;
             // 
             // LoginEmailLabel
             // 
@@ -98,6 +98,7 @@
             LoginButton.TabIndex = 11;
             LoginButton.Text = "Log in";
             LoginButton.UseVisualStyleBackColor = true;
+            LoginButton.Click += LoginButton_Click;
             // 
             // ExistingUserLoginLabel
             // 
@@ -117,8 +118,8 @@
             Controls.Add(LoginButton);
             Controls.Add(LoginPasswordLabel);
             Controls.Add(LoginEmailLabel);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(LoginPasswordTextbox);
+            Controls.Add(LoginEmailTextbox);
             Controls.Add(CreateNewAccountButton);
             Controls.Add(CreateNewUserButton);
             Name = "LoginForm";
@@ -130,8 +131,8 @@
         #endregion
         private Button CreateNewUserButton;
         private Button CreateNewAccountButton;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox LoginEmailTextbox;
+        private TextBox LoginPasswordTextbox;
         private Label LoginEmailLabel;
         private Label LoginPasswordLabel;
         private Button LoginButton;

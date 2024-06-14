@@ -13,6 +13,7 @@ namespace BankingApplication.Interfaces
         public BankAccount RetrieveAccountByAccountNumber(int accountNumber);
         public void UpdateAccountInfo(BankAccount account);
         public void DeleteAccountByAccountNumber(int accountNumber);
+        public void CreateNewAccountForUserId(BankUser user);
 
     }
 }
