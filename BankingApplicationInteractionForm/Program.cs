@@ -25,7 +25,7 @@ namespace BankingApplicationInteractionForm
         }
         private static void ConfigureServices(IServiceCollection services)
         {
-            //allows the use of CRUD actions in the ICRUDActions interface in the other project
+
             services.AddDbContext<BankingApplicationDbContext>(options =>
             options.UseSqlServer(@"Data Source=.\HYDAELYN;Initial Catalog=BankingApplicationDb;Integrated Security=True;Encrypt=False;"));
 

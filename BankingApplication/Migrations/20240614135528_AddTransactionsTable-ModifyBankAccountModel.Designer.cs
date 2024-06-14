@@ -3,6 +3,7 @@ using BankingApplication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankingApplication.Migrations
 {
     [DbContext(typeof(BankingApplicationDbContext))]
-    partial class BankingApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614135528_AddTransactionsTable-ModifyBankAccountModel")]
+    partial class AddTransactionsTableModifyBankAccountModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace BankingApplication.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("BankAccounts", (string)null);
+                    b.ToTable("BankAccounts");
                 });
 
             modelBuilder.Entity("BankingApplication.Models.BankUser", b =>
@@ -61,7 +64,7 @@ namespace BankingApplication.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("BankUsers", (string)null);
+                    b.ToTable("BankUsers");
                 });
 
             modelBuilder.Entity("BankingApplication.Models.Transaction", b =>
@@ -87,7 +90,7 @@ namespace BankingApplication.Migrations
 
                     b.HasIndex("AccountNumber");
 
-                    b.ToTable("Transactions", (string)null);
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("BankingApplication.Models.BankAccount", b =>

@@ -1,0 +1,22 @@
+Table  users {
+  userId integer [Primary Key]
+  email string
+  password string 
+}
+
+Table accounts {
+  accountNumber integer [primary key]
+  balance integer
+  userId integer
+}
+
+Table transactions {
+  transactionId integer [primary key]
+  transactionType string
+  transactionAmount decimal
+  accountNumber integer
+}
+
+Ref: accounts.userId > users.userId // many-to-one
+
+Ref: transactions.accountNumber > accounts.accountNumber
