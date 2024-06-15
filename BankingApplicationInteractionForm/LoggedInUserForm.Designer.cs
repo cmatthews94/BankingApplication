@@ -45,6 +45,14 @@
             Account3NumberDisplayLabel = new Label();
             Account3BalanceLabel = new Label();
             Account3BalanceDisplayLabel = new Label();
+            TransactionConfirmButton = new Button();
+            MakeTransactionLabel = new Label();
+            PickAccountCombobox = new ComboBox();
+            PickAccountLabel = new Label();
+            TranscationTypeLabel = new Label();
+            TransactionTypeCombobox = new ComboBox();
+            TransactionAmountLabel = new Label();
+            TransactionAmountTextbox = new TextBox();
             SuspendLayout();
             // 
             // LoggedInUserEmailTitleLabel
@@ -60,7 +68,7 @@
             // 
             LoggedInUserEmailDisplayLabel.AutoSize = true;
             LoggedInUserEmailDisplayLabel.Font = new Font("Segoe UI", 20F);
-            LoggedInUserEmailDisplayLabel.Location = new Point(151, 9);
+            LoggedInUserEmailDisplayLabel.Location = new Point(1, 48);
             LoggedInUserEmailDisplayLabel.Name = "LoggedInUserEmailDisplayLabel";
             LoggedInUserEmailDisplayLabel.Size = new Size(261, 37);
             LoggedInUserEmailDisplayLabel.TabIndex = 1;
@@ -108,7 +116,7 @@
             // 
             // LogoutButton
             // 
-            LogoutButton.Location = new Point(459, 159);
+            LogoutButton.Location = new Point(157, 22);
             LogoutButton.Name = "LogoutButton";
             LogoutButton.Size = new Size(75, 23);
             LogoutButton.TabIndex = 6;
@@ -137,7 +145,7 @@
             // Account2NumberLabel
             // 
             Account2NumberLabel.AutoSize = true;
-            Account2NumberLabel.Location = new Point(188, 91);
+            Account2NumberLabel.Location = new Point(12, 121);
             Account2NumberLabel.Name = "Account2NumberLabel";
             Account2NumberLabel.Size = new Size(102, 15);
             Account2NumberLabel.TabIndex = 9;
@@ -147,7 +155,7 @@
             // Account2BalanceLabel
             // 
             Account2BalanceLabel.AutoSize = true;
-            Account2BalanceLabel.Location = new Point(188, 106);
+            Account2BalanceLabel.Location = new Point(12, 136);
             Account2BalanceLabel.Name = "Account2BalanceLabel";
             Account2BalanceLabel.Size = new Size(51, 15);
             Account2BalanceLabel.TabIndex = 10;
@@ -157,7 +165,7 @@
             // Account2NumberDisplayLabel
             // 
             Account2NumberDisplayLabel.AutoSize = true;
-            Account2NumberDisplayLabel.Location = new Point(296, 91);
+            Account2NumberDisplayLabel.Location = new Point(120, 121);
             Account2NumberDisplayLabel.Name = "Account2NumberDisplayLabel";
             Account2NumberDisplayLabel.Size = new Size(62, 15);
             Account2NumberDisplayLabel.TabIndex = 11;
@@ -167,7 +175,7 @@
             // Account2BalanceDisplayLabel
             // 
             Account2BalanceDisplayLabel.AutoSize = true;
-            Account2BalanceDisplayLabel.Location = new Point(296, 106);
+            Account2BalanceDisplayLabel.Location = new Point(120, 136);
             Account2BalanceDisplayLabel.Name = "Account2BalanceDisplayLabel";
             Account2BalanceDisplayLabel.Size = new Size(53, 15);
             Account2BalanceDisplayLabel.TabIndex = 12;
@@ -177,7 +185,7 @@
             // Account3NumberLabel
             // 
             Account3NumberLabel.AutoSize = true;
-            Account3NumberLabel.Location = new Point(364, 91);
+            Account3NumberLabel.Location = new Point(12, 151);
             Account3NumberLabel.Name = "Account3NumberLabel";
             Account3NumberLabel.Size = new Size(102, 15);
             Account3NumberLabel.TabIndex = 13;
@@ -187,7 +195,7 @@
             // Account3NumberDisplayLabel
             // 
             Account3NumberDisplayLabel.AutoSize = true;
-            Account3NumberDisplayLabel.Location = new Point(472, 91);
+            Account3NumberDisplayLabel.Location = new Point(120, 151);
             Account3NumberDisplayLabel.Name = "Account3NumberDisplayLabel";
             Account3NumberDisplayLabel.Size = new Size(62, 15);
             Account3NumberDisplayLabel.TabIndex = 14;
@@ -197,7 +205,7 @@
             // Account3BalanceLabel
             // 
             Account3BalanceLabel.AutoSize = true;
-            Account3BalanceLabel.Location = new Point(364, 106);
+            Account3BalanceLabel.Location = new Point(12, 166);
             Account3BalanceLabel.Name = "Account3BalanceLabel";
             Account3BalanceLabel.Size = new Size(51, 15);
             Account3BalanceLabel.TabIndex = 15;
@@ -207,18 +215,99 @@
             // Account3BalanceDisplayLabel
             // 
             Account3BalanceDisplayLabel.AutoSize = true;
-            Account3BalanceDisplayLabel.Location = new Point(472, 106);
+            Account3BalanceDisplayLabel.Location = new Point(120, 166);
             Account3BalanceDisplayLabel.Name = "Account3BalanceDisplayLabel";
             Account3BalanceDisplayLabel.Size = new Size(53, 15);
             Account3BalanceDisplayLabel.TabIndex = 16;
             Account3BalanceDisplayLabel.Text = "acc bal 3";
             Account3BalanceDisplayLabel.Visible = false;
             // 
+            // TransactionConfirmButton
+            // 
+            TransactionConfirmButton.Location = new Point(151, 302);
+            TransactionConfirmButton.Name = "TransactionConfirmButton";
+            TransactionConfirmButton.Size = new Size(100, 24);
+            TransactionConfirmButton.TabIndex = 17;
+            TransactionConfirmButton.Text = "Confirm";
+            TransactionConfirmButton.UseVisualStyleBackColor = true;
+            TransactionConfirmButton.Click += TransactionConfirmButton_Click;
+            // 
+            // MakeTransactionLabel
+            // 
+            MakeTransactionLabel.AutoSize = true;
+            MakeTransactionLabel.Font = new Font("Segoe UI", 20F);
+            MakeTransactionLabel.Location = new Point(1, 205);
+            MakeTransactionLabel.Name = "MakeTransactionLabel";
+            MakeTransactionLabel.Size = new Size(162, 37);
+            MakeTransactionLabel.TabIndex = 18;
+            MakeTransactionLabel.Text = "Transactions";
+            // 
+            // PickAccountCombobox
+            // 
+            PickAccountCombobox.FormattingEnabled = true;
+            PickAccountCombobox.Location = new Point(12, 260);
+            PickAccountCombobox.Name = "PickAccountCombobox";
+            PickAccountCombobox.Size = new Size(121, 23);
+            PickAccountCombobox.TabIndex = 19;
+            PickAccountCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // PickAccountLabel
+            // 
+            PickAccountLabel.AutoSize = true;
+            PickAccountLabel.Location = new Point(12, 242);
+            PickAccountLabel.Name = "PickAccountLabel";
+            PickAccountLabel.Size = new Size(92, 15);
+            PickAccountLabel.TabIndex = 20;
+            PickAccountLabel.Text = "Which account?";
+            // 
+            // TranscationTypeLabel
+            // 
+            TranscationTypeLabel.AutoSize = true;
+            TranscationTypeLabel.Location = new Point(12, 286);
+            TranscationTypeLabel.Name = "TranscationTypeLabel";
+            TranscationTypeLabel.Size = new Size(129, 15);
+            TranscationTypeLabel.TabIndex = 21;
+            TranscationTypeLabel.Text = "Deposit or Withdrawal?";
+            // 
+            // TransactionTypeCombobox
+            // 
+            TransactionTypeCombobox.FormattingEnabled = true;
+            TransactionTypeCombobox.Location = new Point(12, 304);
+            TransactionTypeCombobox.Name = "TransactionTypeCombobox";
+            TransactionTypeCombobox.Size = new Size(121, 23);
+            TransactionTypeCombobox.TabIndex = 22;
+            TransactionTypeCombobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            // 
+            // TransactionAmountLabel
+            // 
+            TransactionAmountLabel.AutoSize = true;
+            TransactionAmountLabel.Location = new Point(176, 242);
+            TransactionAmountLabel.Name = "TransactionAmountLabel";
+            TransactionAmountLabel.Size = new Size(56, 15);
+            TransactionAmountLabel.TabIndex = 23;
+            TransactionAmountLabel.Text = "Amount?";
+            // 
+            // TransactionAmountTextbox
+            // 
+            TransactionAmountTextbox.Location = new Point(151, 260);
+            TransactionAmountTextbox.Name = "TransactionAmountTextbox";
+            TransactionAmountTextbox.Size = new Size(100, 23);
+            TransactionAmountTextbox.TabIndex = 24;
+            TransactionAmountTextbox.Validating += TransactionAmountTextbox_Validating;
+            // 
             // LoggedInUserForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(545, 194);
+            ClientSize = new Size(269, 343);
+            Controls.Add(TransactionAmountTextbox);
+            Controls.Add(TransactionAmountLabel);
+            Controls.Add(TransactionTypeCombobox);
+            Controls.Add(TranscationTypeLabel);
+            Controls.Add(PickAccountLabel);
+            Controls.Add(PickAccountCombobox);
+            Controls.Add(MakeTransactionLabel);
+            Controls.Add(TransactionConfirmButton);
             Controls.Add(Account3BalanceDisplayLabel);
             Controls.Add(Account3BalanceLabel);
             Controls.Add(Account3NumberDisplayLabel);
@@ -266,5 +355,13 @@
         private Label Account3NumberDisplayLabel;
         private Label Account3BalanceLabel;
         private Label Account3BalanceDisplayLabel;
+        private Button TransactionConfirmButton;
+        private Label MakeTransactionLabel;
+        private ComboBox PickAccountCombobox;
+        private Label PickAccountLabel;
+        private Label TranscationTypeLabel;
+        private ComboBox TransactionTypeCombobox;
+        private Label TransactionAmountLabel;
+        private TextBox TransactionAmountTextbox;
     }
 }

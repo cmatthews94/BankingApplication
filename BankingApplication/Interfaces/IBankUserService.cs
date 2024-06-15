@@ -4,12 +4,11 @@ namespace BankingApplication.Interfaces
 {
     public interface IBankUserService
     {
-        public void AddNewUser(BankUser newUser);
-        public BankUser RetrieveUserById(int id);
-        public BankUser RetrieveUserByEmail(string email);
-        public void UpdateUserInfo(BankUser user);
+        public void CreateNewUser(string email, string password);
+        public BankUser GetUserById(int id);
+        public BankUser GetUserByEmail(string email);
+        public void UpdateUserEmailOrPassword(BankUser user);
         public void DeleteUserByUserId(int userId);
-        public void CreateUserAndAddToDb(string email, string password);
         public void AddAccountToUser(BankUser user, BankAccount account);
     }
 }

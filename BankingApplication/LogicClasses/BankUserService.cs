@@ -19,25 +19,31 @@ namespace BankingApplication.LogicClasses
             _accountService = accountService;
         }
 
-        public void AddNewUser(BankUser newUser)
+        public void CreateNewUser(string email, string password)
         {
+            var newUser = new BankUser()
+            {
+                EmailAddress = email,
+                Password = password,
+            };
+            _accountService.CreateNewAccount(newUser);
             _context.BankUsers.Add(newUser);
             _context.SaveChanges();
         }
-        public BankUser RetrieveUserById(int id)
+        public BankUser GetUserById(int id)
         {
             return _context.BankUsers.First(i => i.UserId == id);
         }
-        public BankUser RetrieveUserByEmail(string email)
+        public BankUser GetUserByEmail(string email)
         {
             return _context.BankUsers
                 .Include(a => a.UserAccounts)
                 .First(i => i.EmailAddress == email);
         }
 
-        public void UpdateUserInfo(BankUser user)
+        public void UpdateUserEmailOrPassword(BankUser user)
         {
-            var existingUser = RetrieveUserById(user.UserId);
+            var existingUser = GetUserById(user.UserId);
 
             existingUser.EmailAddress = user.EmailAddress;
             existingUser.Password = user.Password;
@@ -45,18 +51,7 @@ namespace BankingApplication.LogicClasses
         }
         public void DeleteUserByUserId(int userId)
         {
-            _context.BankUsers.Remove(RetrieveUserById(userId));
-            _context.SaveChanges();
-        }
-        public void CreateUserAndAddToDb(string email, string password)
-        {
-            var newUser = new BankUser()
-            {
-                EmailAddress = email,
-                Password = password,
-            };
-            _accountService.CreateNewAccountForUserId(newUser);
-            _context.BankUsers.Add(newUser);
+            _context.BankUsers.Where(i => i.UserId == userId).ExecuteDelete();
             _context.SaveChanges();
         }
         public void AddAccountToUser(BankUser user, BankAccount account)

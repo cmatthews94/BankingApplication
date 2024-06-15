@@ -32,6 +32,7 @@ namespace BankingApplicationInteractionForm
             //makes the dependencies available to the below forms on request
             services.AddSingleton<IBankUserService, BankUserService>();
             services.AddSingleton<IBankAccountService, BankAccountService>();
+            services.AddSingleton<ITransactionService, TransactionService>();
             services.AddSingleton<LoginForm>();
             services.AddSingleton<CreateUserForm>();
         }

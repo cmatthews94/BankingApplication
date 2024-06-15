@@ -10,11 +10,13 @@ namespace BankingApplicationInteractionForm
     {
         private readonly IBankUserService _bankUserService;
         private readonly IBankAccountService _bankAccountService;
-        public LoginForm(IBankUserService bankUserService, IBankAccountService bankAccountActions)
+        private readonly ITransactionService _transactionService;
+        public LoginForm(IBankUserService bankUserService, IBankAccountService bankAccountActions, ITransactionService transactionService)
         {
             InitializeComponent();
             _bankUserService = bankUserService;
             _bankAccountService = bankAccountActions;
+            _transactionService = transactionService;
         }
 
         private void CreateNewUserButton_Click(object sender, EventArgs e)
@@ -32,10 +34,10 @@ namespace BankingApplicationInteractionForm
         private void LoginButton_Click(object sender, EventArgs e)
         {
             
-            var foundUser = _bankUserService.RetrieveUserByEmail(LoginEmailTextbox.Text);
+            var foundUser = _bankUserService.GetUserByEmail(LoginEmailTextbox.Text);
             if (foundUser.Password == LoginPasswordTextbox.Text)
             {
-                var loggedInUserForm = new LoggedInUserForm(_bankUserService, _bankAccountService);
+                var loggedInUserForm = new LoggedInUserForm(_bankUserService, _bankAccountService, _transactionService);
                 loggedInUserForm._userDetails = foundUser;
                 loggedInUserForm.ShowDialog();
                 LoginEmailTextbox.Clear();
@@ -45,6 +47,7 @@ namespace BankingApplicationInteractionForm
             {
                 MessageBox.Show("no user found with that email/password incorrect");
             }
+
         }
     }
 }

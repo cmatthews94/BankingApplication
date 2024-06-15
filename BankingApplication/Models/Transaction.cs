@@ -14,14 +14,12 @@ namespace BankingApplication.Models
     {
         [Key]
         public int TransactionId { get; set; }
-        public string TransactionType { get; set; }
+        public TransactionType TransactionType { get; set; }
         [Precision(18, 2)]
         public decimal TransactionValue { get; set; }
-
-        public BankAccount BankAccount { get; set; }
+        public DateTime TransactionDate { get; set; }
         [ForeignKey("AccountNumber")]
         public int AccountNumber {  get; set; }
-
-
+        public BankAccount BankAccount { get; set; }
     }
 }

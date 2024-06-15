@@ -20,7 +20,7 @@ namespace BankingApplication.Models
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public BankUser BankUser { get; set; }
-        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<Transaction> Transactions { get; } = new List<Transaction>();
 
     }
 }

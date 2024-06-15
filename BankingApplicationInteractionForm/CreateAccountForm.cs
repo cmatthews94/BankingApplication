@@ -26,14 +26,14 @@ namespace BankingApplicationInteractionForm
         private void CreateNewAccountButton_Click(object sender, EventArgs e)
         {
 
-            var locatedUser = _bankUserService.RetrieveUserByEmail(EmailInputTextbox.Text);
+            var locatedUser = _bankUserService.GetUserByEmail(EmailInputTextbox.Text);
             if (locatedUser == null)
             {
                 MessageBox.Show($"no user found for {EmailInputTextbox.Text}");
             }
             else
             {
-                _bankAccountActions.CreateNewAccountForUserId(locatedUser);
+                _bankAccountActions.CreateNewAccount(locatedUser);
 
                 MessageBox.Show($"Account Created for {EmailInputTextbox.Text}", "", MessageBoxButtons.OK);
                 EmailInputTextbox.Text = "";

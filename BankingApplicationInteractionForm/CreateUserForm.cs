@@ -29,7 +29,7 @@ namespace BankingApplicationInteractionForm
         {
             if (this.EmailInputTextbox != null & this.PasswordInputTextbox.Text != null)
             {
-                _bankUserService.CreateUserAndAddToDb(EmailInputTextbox.Text, PasswordInputTextbox.Text);
+                _bankUserService.CreateNewUser(EmailInputTextbox.Text, PasswordInputTextbox.Text);
 
                 MessageBox.Show("Account Created", "", MessageBoxButtons.OK);
                 EmailInputTextbox.Text = "";
