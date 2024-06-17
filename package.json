@@ -1,0 +1,15 @@
+{
+  "name": "bankingapplication",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "postCSS": "npm:postcss@^7.0.39"
+  }
+}

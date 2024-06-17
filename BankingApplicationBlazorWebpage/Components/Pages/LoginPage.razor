@@ -1,0 +1,41 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using BankingApplication.Models
+@using BankingApplication.Interfaces
+@inject IBankAccountService _bankAccountService
+@inject IBankUserService _bankUserService
+@inject ITransactionService _transactionService
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />    
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <PageTitle>Welcome to the Banking Application</PageTitle>
+</head>
+
+<div class="CenterPosition">
+    <MudPaper class="py-2 px-6 round-lg" Width="40%">
+        <div class="mud-theme-primary mx-auto py-2 px-6 mx-4 rounded-pill">Please log in:</div>
+        <MudTextField @bind-Value="_emailAddress" Label="Enter your e-mail..." Variant="Variant.Filled"/>
+        <MudTextField @bind-Value="_password" Label="Enter your password" Variant="Variant.Filled"/>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" class="btn btn-primary my-2" @onclick="SendLoginRequest">Login</MudButton>
+    </MudPaper>
+</div>
+
+
+
+@code {
+    private string _emailAddress ="";
+    private string _password = "";
+    private string emailAddress = "";
+
+    private void SendLoginRequest()
+    {
+        try
+        {
+            var BankUser = _bankUserService.GetUserByEmail(_emailAddress);
+        }
+        catch (Exception e) { emailAddress = e.ToString(); };
+    }
+}
+
+<script src="_content/MudBlazor/MudBlazor.min.js"></script>
