@@ -4,6 +4,7 @@ using BankingApplication;
 using BankingApplicationBlazorWebpage.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
+using BankingApplicationBlazorWebpage.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,14 @@ builder.Services.AddMudServices();
 
 builder.Services.AddDbContext<BankingApplicationDbContext>(options =>
     options.UseSqlServer(@"Data Source=.\HYDAELYN;Initial Catalog=BankingApplicationDb;Integrated Security=True;Encrypt=False;"));
+
 builder.Services.AddTransient<IBankUserService, BankUserService>();
 builder.Services.AddTransient<IBankAccountService, BankAccountService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
+builder.Services.AddTransient<HttpClient>();
+
+builder.Services.AddSingleton<AppState>();
+builder.Services.AddScoped<HomePageRefreshState>();
 
 var app = builder.Build();
 

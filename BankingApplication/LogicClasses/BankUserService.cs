@@ -40,6 +40,12 @@ namespace BankingApplication.LogicClasses
                 .Include(a => a.UserAccounts)
                 .First(i => i.EmailAddress == email);
         }
+        public async Task<BankUser> GetUserByEmailAsync(string email)
+        {
+            return await _context.BankUsers
+                .Include(a => a.UserAccounts)
+                .FirstAsync(i => i.EmailAddress == email);
+        }
 
         public void UpdateUserEmailOrPassword(BankUser user)
         {

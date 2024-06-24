@@ -1,18 +1,60 @@
 ﻿@page "/TransactionDialogComponent"
+@using BankingApplication.Interfaces
+@using BankingApplication.Models
 @using MudBlazor
+@inject ITransactionService _transactionService
+@inject IDialogService _dialogService
+@inject Services.HomePageRefreshState _homePageRefreshState
+
 
 <MudDialog>
     <DialogContent>
-        Dialog Content
+        <MudRadioGroup @bind-Value="@SelectedOption">
+            <MudRadio Value="@("Withdraw")" Color="Color.Primary">Withdraw</MudRadio>
+            <MudRadio Value="@("Deposit")" Color="Color.Secondary">Deposit</MudRadio>
+        </MudRadioGroup>
+            <MudTextField @bind-Value="TransactionAmount" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney"> </MudTextField>
+            <div class="d-flex justify-center button-container">
+                <MudButton @onclick="Sendtransaction" Variant="Variant.Filled" Color="Color.Primary">Request Transaction</MudButton>
+            </div>
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
         <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
     </DialogActions>
 </MudDialog>
+
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
+    [Parameter]
+    public BankAccount Account { get; set; }
+
+    private decimal TransactionAmount;
+    public string SelectedOption { get; set; }
+
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
-} 
+    private void Sendtransaction()
+    {
+        if(TransactionAmount != 0)
+        {
+            if(SelectedOption == "Withdraw" && _transactionService.CheckIfTransactionViable(TransactionAmount, Account) == true)
+            {
+                _transactionService.CreateTransaction(TransactionType.Withdrawal, TransactionAmount, Account);
+                _dialogService.ShowMessageBox("status", "successfully performed withdrawal");
+            }
+            else if (SelectedOption == "Withdraw" && _transactionService.CheckIfTransactionViable(TransactionAmount, Account) == false)
+            {
+
+                _dialogService.ShowMessageBox("status", "funds not available for withdrawal");
+            }
+            else if (SelectedOption == "Deposit")
+            {
+                _transactionService.CreateTransaction(TransactionType.Deposit, TransactionAmount, Account);
+                _dialogService.ShowMessageBox("status", "Deposit Successful");
+            }
+
+        }
+        _homePageRefreshState.NotifyStateChanged();
+    }
+}

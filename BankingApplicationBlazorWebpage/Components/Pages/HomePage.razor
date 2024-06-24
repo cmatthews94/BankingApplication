@@ -1,13 +1,17 @@
 ﻿@page "/HomePage"
 @rendermode InteractiveServer
-@inject NavigationManager _navigationManager;
 @using BankingApplication.Models
 @using BankingApplication.Interfaces
+@inject NavigationManager _navigationManager
+@inject HttpClient _http
+@inject Services.AppState _appState
+@inject Services.HomePageRefreshState _homePageRefreshState
 @inject IBankAccountService _bankAccountService
 @inject IBankUserService _bankUserService
 @inject ITransactionService _transactionService
 @using MudBlazor
 
+<MudDialogProvider />
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
@@ -15,11 +19,61 @@
 </head>
 
 
-<div class="accountDisplayComponentSizing">
-    <AccountDisplayComponent></AccountDisplayComponent>
+<h1 class="CenterHeader">
+    @if (User == null)
+    {
+        <div class="spinner"></div>
+    }
+    else
+    {
+        <span> Welcome @User.EmailAddress</span>
+    }
+</h1>
+<div class="CenterAccounts">
+    @if (User == null)
+        {
+            <div class="spinner"></div>
+        }
+    else
+        {
+        <CascadingValue Value="User">
+            <div class="horizontal-container">
+                @foreach (BankAccount account in User.UserAccounts)
+                {
+                    <CascadingValue Value="account">
+                        <div class="accountDisplayComponentSizing">
+                            <AccountDisplayComponent />
+                        </div>
+                    </CascadingValue>
+                }
+            </div>
+        </CascadingValue>
+    }
+</div>
+
+<div class="AlignButtonBottomRight">
+    <MudButton @onclick="ReturnToLogin" Variant="Variant.Filled" Color="Color.Primary">
+        Log out
+    </MudButton>
+
 </div>
 
 @code {
 
+    public BankUser User;
 
+    protected override async Task OnInitializedAsync()
+    {
+        _homePageRefreshState.OnChange += StateHasChanged;
+        User = await _bankUserService.GetUserByEmailAsync(_appState.EmailAddress);
+    }
+    public void Dispose()
+    {
+        _homePageRefreshState.OnChange -= StateHasChanged;
+    }
+    public void ReturnToLogin()
+    {
+        User = null;
+        _navigationManager.NavigateTo("/");
+    }
 }

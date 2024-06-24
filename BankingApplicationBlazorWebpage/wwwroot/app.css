@@ -52,10 +52,6 @@ h1:focus {
     border-color: #929292;
 }
 
-.centerPositioning {
-    width: 40%;
-    padding: 10px; 
-}
 
 .LoginBox {
     width: 20%;
@@ -73,13 +69,42 @@ input[type="text"] {
     margin: 10px auto;
 }
 
-.CenterPosition {
+.CenterHeader {
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     min-height: 1vh;
-    background-color: #21252929;
+    margin-top: 1vh;
+}
+
+.CenterAccounts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 1vh;
+    padding-bottom: 3vh;
+    margin-top: 2vh;
+}
+.CenterLoginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 1vh;
+    padding-bottom: 3vh;
+    margin-top: 2vh;
+}
+.AlignButtonBottomRight {
+    display: flex;
+    justify-content: end ;
+    align-items: end;
+    text-align: center;
+    min-height: 1vh;
+    padding-bottom: 3vh;
+    margin-top: 2vh;
+    padding-right: 2vh;
 }
 
 .MarginTop10vh{
@@ -101,8 +126,42 @@ input[type="text"] {
 }
 
 .accountDisplayComponentSizing {
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 8px;
     width: 200px;
-    height: 250px
+    height: 250px;
+    border-radius: 25px;
+}
+
+.spinner {
+    border: 16px solid silver;
+    border-top: 16px solid #337AB7;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 700ms linear infinite;
+    top: 40%;
+    left: 55%;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.horizontal-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows the items to wrap to the next line if there's not enough space */
+    gap: 1rem; /* Adds space between the items */
+}
+
+.accountDisplayComponentSizing {
+    width: 200px;
+    height: 250px; /* Adjusts the width of the items, ensuring they are responsive */
 }

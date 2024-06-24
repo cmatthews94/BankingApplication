@@ -1,8 +1,9 @@
 ﻿@page "/"
 @rendermode InteractiveServer
-@inject NavigationManager _navigationManager;
 @using BankingApplication.Models
 @using BankingApplication.Interfaces
+@inject NavigationManager _navigationManager
+@inject Services.AppState _appState
 @inject IBankAccountService _bankAccountService
 @inject IBankUserService _bankUserService
 @inject ITransactionService _transactionService
@@ -13,7 +14,7 @@
     <PageTitle>Welcome to the Banking Application</PageTitle>
 </head>
 
-<div class="CenterPosition">
+<div class="CenterLoginPage">
     <MudPaper class="py-2 px-6 round-lg MarginTop10vh" Width="40%">
         <div class="mud-theme-primary mx-auto py-2 px-6 mx-4 rounded-pill">Please log in:</div>
         <MudTextField @bind-Value="_emailAddress" Label="Enter your e-mail..." Variant="Variant.Filled"/>
@@ -25,19 +26,16 @@
 @code {
     private string _emailAddress ="";
     private string _password = "";
-    private string emailAddress = "";
 
     private void SendLoginRequest()
     {
-        //try
-        //{
-        //var BankUser = _bankUserService.GetUserByEmail(_emailAddress);
-        //}
-        //catch (Exception e) { emailAddress = e.ToString(); };
-        _navigationManager.NavigateTo("/HomePage");
-
+        try
+        {
+            _appState.EmailAddress = _emailAddress;
+            _navigationManager.NavigateTo("/HomePage");
+        }
+        catch (Exception e) { _emailAddress = e.ToString(); };
     }
 
 }
-
 <script src="_content/MudBlazor/MudBlazor.min.js"></script>
