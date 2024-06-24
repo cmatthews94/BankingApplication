@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingApplication", "Banki
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingApplicationInteractionForm", "BankingApplicationInteractionForm\BankingApplicationInteractionForm.csproj", "{7CAF46FF-43B1-4E1D-9F5E-5DBB6AC52AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingApplicationBlazorWebpage", "BankingApplicationBlazorWebpage\BankingApplicationBlazorWebpage.csproj", "{E2078067-47E8-46D7-8CF3-05CCB8FE6E54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingApplicationBlazorWebpage", "BankingApplicationBlazorWebpage\BankingApplicationBlazorWebpage.csproj", "{E2078067-47E8-46D7-8CF3-05CCB8FE6E54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

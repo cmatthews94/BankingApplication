@@ -1,0 +1,25 @@
+﻿@page "/HomePage"
+@rendermode InteractiveServer
+@inject NavigationManager _navigationManager;
+@using BankingApplication.Models
+@using BankingApplication.Interfaces
+@inject IBankAccountService _bankAccountService
+@inject IBankUserService _bankUserService
+@inject ITransactionService _transactionService
+@using MudBlazor
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <PageTitle>Welcome</PageTitle>
+</head>
+
+
+<div class="accountDisplayComponentSizing">
+    <AccountDisplayComponent></AccountDisplayComponent>
+</div>
+
+@code {
+
+
+}

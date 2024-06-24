@@ -1,0 +1,24 @@
+﻿@page "/AccountDisplayComponent"
+@using MudBlazor
+@inject IDialogService DialogService
+<MudDialogProvider />
+
+<MudPaper Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
+    <MudTextField @bind-Value="accountNumber" Label="Acc No." ReadOnly="true" Variant="Variant.Outlined" />
+    <MudTextField @bind-Value="accountBalance" Label="Acc Balance." ReadOnly="true" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+    <div class="d-flex justify-center button-container">
+        <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+            Withdraw/Deposit
+        </MudButton>
+    </div>
+</MudPaper>
+
+@code {
+    public string accountNumber;
+    public string accountBalance;
+    private void OpenDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<TransactionDialogComponent>("Simple Dialog", options);
+    }
+}
