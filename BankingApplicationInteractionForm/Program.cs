@@ -33,8 +33,12 @@ namespace BankingApplicationInteractionForm
             services.AddSingleton<IBankUserService, BankUserService>();
             services.AddSingleton<IBankAccountService, BankAccountService>();
             services.AddSingleton<ITransactionService, TransactionService>();
+            services.AddSingleton<IPasswordHashingService, PasswordHashingService>();
             services.AddSingleton<LoginForm>();
             services.AddSingleton<CreateUserForm>();
+
         }
+
+
     }
 }

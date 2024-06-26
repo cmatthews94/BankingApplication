@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,32 +14,37 @@ namespace BankingApplication.LogicClasses
     {
         private readonly BankingApplicationDbContext _context;
         private readonly IBankAccountService _accountService;
-        public BankUserService(BankingApplicationDbContext context, IBankAccountService accountService)
+        private readonly IPasswordHashingService _passwordHashingService;
+        public BankUserService(BankingApplicationDbContext context, IBankAccountService accountService, IPasswordHashingService authenticationService)
         {
             _context = context;
             _accountService = accountService;
+            _passwordHashingService = authenticationService; 
         }
 
         public void CreateNewUser(string email, string password)
         {
+            var result = _passwordHashingService.VerifyIfEmailIsValid(email);
+            if (!result)
+            {
+                throw new Exception("e-mail provided is invalid");
+            }
+            var passwordHash = _passwordHashingService.HashPassword(password);
+
             var newUser = new BankUser()
             {
                 EmailAddress = email,
-                Password = password,
+                Password = passwordHash,
             };
             _accountService.CreateNewAccount(newUser);
             _context.BankUsers.Add(newUser);
             _context.SaveChanges();
         }
-        public BankUser GetUserById(int id)
-        {
-            return _context.BankUsers.First(i => i.UserId == id);
-        }
         public BankUser GetUserByEmail(string email)
         {
-            return _context.BankUsers
-                .Include(a => a.UserAccounts)
-                .First(i => i.EmailAddress == email);
+                return _context.BankUsers
+                    .Include(a => a.UserAccounts)
+                    .First(i => i.EmailAddress == email);
         }
         public async Task<BankUser> GetUserByEmailAsync(string email)
         {
@@ -47,18 +53,20 @@ namespace BankingApplication.LogicClasses
                 .FirstAsync(i => i.EmailAddress == email);
         }
 
-        public void UpdateUserEmailOrPassword(BankUser user)
+        public void ChangeUserPassword(string email, string newPassword)
         {
-            var existingUser = GetUserById(user.UserId);
-
-            existingUser.EmailAddress = user.EmailAddress;
-            existingUser.Password = user.Password;
+            var hashedPassword = _passwordHashingService.HashPassword(newPassword);
+            
+            _context.BankUsers
+                .Where(b => b.EmailAddress == email)
+                .ExecuteUpdate(u => u.SetProperty(b => b.Password, hashedPassword));
             _context.SaveChanges();
         }
         public void DeleteUserByUserId(int userId)
         {
-            _context.BankUsers.Where(i => i.UserId == userId).ExecuteDelete();
-            _context.SaveChanges();
+            _context.BankUsers
+                .Where(b => b.UserId == userId)
+                .ExecuteDelete();
         }
         public void AddAccountToUser(BankUser user, BankAccount account)
         {

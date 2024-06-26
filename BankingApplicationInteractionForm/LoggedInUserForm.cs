@@ -21,26 +21,28 @@ namespace BankingApplicationInteractionForm
         private readonly IBankUserService _bankUserService;
         private readonly IBankAccountService _bankAccountService;
         private readonly ITransactionService _transactionService;
+        private readonly IPasswordHashingService _passwordHashingService;
 
-        public BankUser _userDetails;
+        public BankUser userDetails;
 
         private List<Label> _labelGroup1 = new List<Label>();
         private List<Label> _labelGroup2 = new List<Label>();
         private List<Label> _labelGroup3 = new List<Label>();
 
 
-        public LoggedInUserForm(IBankUserService bankUserService, IBankAccountService bankAccountService, ITransactionService transactionService)
+        public LoggedInUserForm(IBankUserService bankUserService, IBankAccountService bankAccountService, ITransactionService transactionService, IPasswordHashingService passwordHashingService)
         {
             InitializeComponent();
             _bankUserService = bankUserService;
             _bankAccountService = bankAccountService;
             _transactionService = transactionService;
+            _passwordHashingService = passwordHashingService;
         }
         private void LoggedInUserForm_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < _userDetails.UserAccounts.Count; i++)
+            for (int i = 0; i < userDetails.UserAccounts.Count; i++)
             {
-                PickAccountCombobox.Items.Add(_userDetails.UserAccounts.ElementAt(i).AccountNumber.ToString());
+                PickAccountCombobox.Items.Add(userDetails.UserAccounts.ElementAt(i).AccountNumber.ToString());
             }
             TransactionTypeCombobox.Items.Add(TransactionType.Withdrawal);
             TransactionTypeCombobox.Items.Add(TransactionType.Deposit);
@@ -58,25 +60,21 @@ namespace BankingApplicationInteractionForm
                 MessageBox.Show("Please input a currency value (x.xx)");
             }
         }
-        private void LogoutButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void TransactionConfirmButton_Click(object sender, EventArgs e)
         {
             var account = _bankAccountService.GetAccountByAccountNumber(Convert.ToInt32(PickAccountCombobox.Text));
             var transactionAmount = Convert.ToDecimal(TransactionAmountTextbox.Text);
-            if(TransactionTypeCombobox.Text == "Deposit")
+            if (TransactionTypeCombobox.Text == "Deposit")
             {
                 _transactionService.CreateTransaction(TransactionType.Deposit, transactionAmount, account);
                 MessageBox.Show($"Depositing {TransactionAmountTextbox.Text} into account #{account.AccountNumber}");
                 TransactionAmountTextbox.Clear();
                 LoadFormData();
             }
-            else if(TransactionTypeCombobox.Text == "Withdrawal")
+            else if (TransactionTypeCombobox.Text == "Withdrawal")
             {
-                if(_transactionService.CheckIfTransactionViable(transactionAmount, account) == true)
+                if (_transactionService.CheckIfTransactionViable(transactionAmount, account) == true)
                 {
                     _transactionService.CreateTransaction(TransactionType.Withdrawal, transactionAmount, account);
                     MessageBox.Show($"Withdrawing {TransactionAmountTextbox.Text} from account #{account.AccountNumber}");
@@ -108,25 +106,36 @@ namespace BankingApplicationInteractionForm
                this.Account3BalanceDisplayLabel,
                 this.Account3BalanceLabel
             });
-            this.LoggedInUserEmailDisplayLabel.Text = _userDetails.EmailAddress;
-            this.LoggedInUserIdDisplayLabel.Text = _userDetails.UserId.ToString();
+            this.LoggedInUserEmailDisplayLabel.Text = userDetails.EmailAddress;
 
             //used chatGPT to consolidate an absolutely monstrous switch case method
             var accountLabels = new List<List<Label>> { _labelGroup1, _labelGroup2, _labelGroup3 }; // Assuming _labelGroup3 exists for third account
             var accountNumberLabels = new List<Label> { Account1NumberDisplayLabel, Account2NumberDisplayLabel, Account3NumberDisplayLabel };
             var accountBalanceLabels = new List<Label> { Account1BalanceDisplayLabel, Account2BalanceDisplayLabel, Account3BalanceDisplayLabel };
 
-            for(int i = 0; i < _userDetails.UserAccounts.Count; i++)
+            for (int i = 0; i < userDetails.UserAccounts.Count; i++)
             {
-                foreach(Label l in accountLabels[i])
+                foreach (Label l in accountLabels[i])
                 {
                     l.Show();
                 }
-                accountNumberLabels[i].Text = _userDetails.UserAccounts.ElementAt(i).AccountNumber.ToString();
-                accountBalanceLabels[i].Text = _userDetails.UserAccounts.ElementAt(i).Balance.ToString();
+                accountNumberLabels[i].Text = userDetails.UserAccounts.ElementAt(i).AccountNumber.ToString();
+                accountBalanceLabels[i].Text = userDetails.UserAccounts.ElementAt(i).Balance.ToString();
             }
             TransactionAmountTextbox.Text = "0.00";
             TransactionTypeCombobox.Text = "---Select---";
+        }
+
+        private void ChangePasswordButton_Click(object sender, EventArgs e)
+        {
+            var changePasswordForm = new ChangePasswordForm(_bankUserService, _passwordHashingService);
+            changePasswordForm._userDetails = userDetails;
+            changePasswordForm.ShowDialog();
+        }
+
+        private void LogoutButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

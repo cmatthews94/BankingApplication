@@ -125,6 +125,12 @@ input[type="text"] {
     padding-bottom: 8px;
 }
 
+.dialog-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
 .accountDisplayComponentSizing {
     border: 2px solid black;
     padding: 8px;

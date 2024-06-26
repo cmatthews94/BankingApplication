@@ -24,18 +24,20 @@ namespace BankingApplicationInteractionForm
             _bankUserService = bankUserService;
             _bankAccountActions = bankAccountActions;
         }
-
         private void CreateUserButton_Click(object sender, EventArgs e)
         {
-            if (this.EmailInputTextbox != null & this.PasswordInputTextbox.Text != null)
+
+            try
             {
                 _bankUserService.CreateNewUser(EmailInputTextbox.Text, PasswordInputTextbox.Text);
-
-                MessageBox.Show("Account Created", "", MessageBoxButtons.OK);
+                MessageBox.Show("User Created", "", MessageBoxButtons.OK);
                 EmailInputTextbox.Text = "";
                 PasswordInputTextbox.Text = "";
             }
-            else throw new Exception("email or password field empty");
+            catch
+            {
+                MessageBox.Show("Invalid email address");
+            }
         }
 
         private void BacktoLoginButton_Click(object sender, EventArgs e)

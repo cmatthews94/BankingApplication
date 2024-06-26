@@ -7,6 +7,9 @@
 @inject IBankAccountService _bankAccountService
 @inject IBankUserService _bankUserService
 @inject ITransactionService _transactionService
+@inject IPasswordHashingService _passwordHashingService
+@inject ISnackbar Snackbar
+<MudSnackbarProvider/>
 
 <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />    
@@ -26,16 +29,25 @@
 @code {
     private string _emailAddress ="";
     private string _password = "";
+    private bool showPasswordAlert = false;
 
     private void SendLoginRequest()
     {
-        try
+        var foundUser = _bankUserService.GetUserByEmail(_emailAddress);
+        var result = _passwordHashingService.VerifyLoginDetails(foundUser.Password, _password);
+        if (!result)
         {
-            _appState.EmailAddress = _emailAddress;
-            _navigationManager.NavigateTo("/HomePage");
+            showLoginErrorAlert();
+            return;
         }
-        catch (Exception e) { _emailAddress = e.ToString(); };
+        _appState.EmailAddress = _emailAddress;
+        _navigationManager.NavigateTo("/HomePage");
     }
-
+    private void showLoginErrorAlert()
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+        Snackbar.Add("Password is incorrect", Severity.Error);
+    }
 }
 <script src="_content/MudBlazor/MudBlazor.min.js"></script>

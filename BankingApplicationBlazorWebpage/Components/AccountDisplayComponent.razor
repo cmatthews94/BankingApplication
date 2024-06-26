@@ -3,11 +3,12 @@
 @using MudBlazor
 @inject IDialogService DialogService
 @inject IBankAccountService _bankAccountService
+@inject Services.HomePageRefreshState _homePageRefreshState
 
 <MudPaper Class="d-flex flex-column flex-grow-1 gap-4" Elevation="0">
-    <MudTextField @bind-Value="Account.AccountNumber" Label="Acc No." ReadOnly="false" Variant="Variant.Outlined" />
+    <MudTextField @bind-Value="Account.AccountNumber" Label="Acc No." ReadOnly="true" Variant="Variant.Outlined" />
     <MudTextField @bind-Value="Account.Balance" Label="Acc Balance." ReadOnly="true" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
-    <div class="d-flex justify-center button-container">
+    <div class="dialog-button-container">
         <MudButton @onclick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
             Withdraw/Deposit
         </MudButton>
@@ -18,11 +19,21 @@
     [CascadingParameter]
     public BankAccount Account { get; set; }
 
+    protected override void OnInitialized()
+    {
+        _homePageRefreshState.OnChange += StateHasChanged;
+    }
+
     private async Task OpenDialog()
     {
         var parameters = new DialogParameters { ["Account"] = Account };
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var dialog = DialogService.Show<TransactionDialogComponent>("Make a transaction", parameters, options);
 
+    }
+
+    public void Dispose()
+    {
+        _homePageRefreshState.OnChange -= StateHasChanged;
     }
 }

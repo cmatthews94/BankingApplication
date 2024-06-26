@@ -11,12 +11,15 @@ namespace BankingApplicationInteractionForm
         private readonly IBankUserService _bankUserService;
         private readonly IBankAccountService _bankAccountService;
         private readonly ITransactionService _transactionService;
-        public LoginForm(IBankUserService bankUserService, IBankAccountService bankAccountActions, ITransactionService transactionService)
+        private readonly IPasswordHashingService _passwordHashingService;
+        public LoginForm(IBankUserService bankUserService, IBankAccountService bankAccountActions, ITransactionService transactionService, IPasswordHashingService bankAuthenticationService)
         {
             InitializeComponent();
             _bankUserService = bankUserService;
             _bankAccountService = bankAccountActions;
             _transactionService = transactionService;
+            _passwordHashingService = bankAuthenticationService;
+
         }
 
         private void CreateNewUserButton_Click(object sender, EventArgs e)
@@ -33,21 +36,26 @@ namespace BankingApplicationInteractionForm
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            
             var foundUser = _bankUserService.GetUserByEmail(LoginEmailTextbox.Text);
-            if (foundUser.Password == LoginPasswordTextbox.Text)
+            var result = _passwordHashingService.VerifyLoginDetails(foundUser.Password, LoginPasswordTextbox.Text);
+            if (!result)
             {
-                var loggedInUserForm = new LoggedInUserForm(_bankUserService, _bankAccountService, _transactionService);
-                loggedInUserForm._userDetails = foundUser;
+                MessageBox.Show("Password is incorrect");
+                return;
+            }
+            else
+            {
+                var loggedInUserForm = new LoggedInUserForm(_bankUserService, _bankAccountService, _transactionService, _passwordHashingService);
+                loggedInUserForm.userDetails = foundUser;
                 loggedInUserForm.ShowDialog();
                 LoginEmailTextbox.Clear();
                 LoginPasswordTextbox.Clear();
             }
-            else
-            {
-                MessageBox.Show("no user found with that email/password incorrect");
-            }
+        }
 
+        private void DeleteUsersButton_Click(object sender, EventArgs e)
+        {
+            _bankUserService.DeleteUserByUserId(1);
         }
     }
 }

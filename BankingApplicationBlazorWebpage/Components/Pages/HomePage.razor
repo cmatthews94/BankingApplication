@@ -3,7 +3,6 @@
 @using BankingApplication.Models
 @using BankingApplication.Interfaces
 @inject NavigationManager _navigationManager
-@inject HttpClient _http
 @inject Services.AppState _appState
 @inject Services.HomePageRefreshState _homePageRefreshState
 @inject IBankAccountService _bankAccountService
@@ -17,7 +16,6 @@
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <PageTitle>Welcome</PageTitle>
 </head>
-
 
 <h1 class="CenterHeader">
     @if (User == null)

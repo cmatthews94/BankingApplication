@@ -5,6 +5,7 @@ using BankingApplicationBlazorWebpage.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using BankingApplicationBlazorWebpage.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<BankingApplicationDbContext>(options =>
 builder.Services.AddTransient<IBankUserService, BankUserService>();
 builder.Services.AddTransient<IBankAccountService, BankAccountService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
-builder.Services.AddTransient<HttpClient>();
+builder.Services.AddTransient<IPasswordHashingService, PasswordHashingService>();
 
 builder.Services.AddSingleton<AppState>();
 builder.Services.AddScoped<HomePageRefreshState>();
