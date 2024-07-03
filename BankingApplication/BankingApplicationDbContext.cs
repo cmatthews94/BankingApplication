@@ -23,9 +23,12 @@ namespace BankingApplication
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder
-                   .UseSqlServer(@"Data Source=.\HYDAELYN;Initial Catalog=BankingApplicationDb;Integrated Security=True;Encrypt=False;");
 
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
+                       .UseSqlServer(@"Data Source=.\HYDAELYN;Initial Catalog=BankingApplicationDb;Integrated Security=True;Encrypt=False;");
+            }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
