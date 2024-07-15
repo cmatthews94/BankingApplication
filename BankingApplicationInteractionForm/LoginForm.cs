@@ -37,7 +37,7 @@ namespace BankingApplicationInteractionForm
         private void LoginButton_Click(object sender, EventArgs e)
         {
             var foundUser = _bankUserService.GetUserByEmail(LoginEmailTextbox.Text);
-            var result = _passwordHashingService.VerifyLoginDetails(foundUser.Password, LoginPasswordTextbox.Text);
+            var result = _passwordHashingService.VerifyPassword(foundUser.Password, LoginPasswordTextbox.Text);
             if (!result)
             {
                 MessageBox.Show("Password is incorrect");

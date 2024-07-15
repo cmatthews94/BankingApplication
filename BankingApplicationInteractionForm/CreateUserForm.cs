@@ -30,6 +30,8 @@ namespace BankingApplicationInteractionForm
             try
             {
                 _bankUserService.CreateNewUser(EmailInputTextbox.Text, PasswordInputTextbox.Text);
+                var user = _bankUserService.GetUserByEmail(EmailInputTextbox.Text);
+                _bankUserService.AddAccountToUser(user, _bankAccountActions.CreateNewAccount(user.UserId));
                 MessageBox.Show("User Created", "", MessageBoxButtons.OK);
                 EmailInputTextbox.Text = "";
                 PasswordInputTextbox.Text = "";

@@ -17,9 +17,9 @@ namespace BankingApplication
         {
         }
 
-        public DbSet<BankUser> BankUsers { get; set; }
-        public DbSet<BankAccount> BankAccounts { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
+        public  DbSet<BankUser> BankUsers { get; set; }
+        public  DbSet<BankAccount> BankAccounts { get; set; }
+        public  DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

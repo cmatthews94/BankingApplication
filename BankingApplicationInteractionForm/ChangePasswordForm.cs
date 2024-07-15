@@ -27,14 +27,14 @@ namespace BankingApplicationInteractionForm
 
         private void SubmitChangePasswordButton_Click(object sender, EventArgs e)
         {
-            var result = _passwordHashingService.VerifyLoginDetails(_userDetails.Password, CurrentPasswordTextbox.Text);
+            var result = _passwordHashingService.VerifyPassword(_userDetails.Password, CurrentPasswordTextbox.Text);
             if (!result)
             {
                MessageBox.Show("current password is incorrect");
                 return;
             }
 
-            _bankUserService.ChangeUserPassword(_userDetails.EmailAddress, NewPasswordTextbox.Text);
+            _bankUserService.ChangeUserPassword(_userDetails.EmailAddress, CurrentPasswordTextbox.Text, NewPasswordTextbox.Text);
             MessageBox.Show("password changed succesfully");
             this.Close();
         }

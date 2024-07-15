@@ -33,7 +33,7 @@ namespace BankingApplicationInteractionForm
             }
             else
             {
-                _bankAccountActions.CreateNewAccount(locatedUser);
+                _bankAccountActions.CreateNewAccount(locatedUser.UserId);
 
                 MessageBox.Show($"Account Created for {EmailInputTextbox.Text}", "", MessageBoxButtons.OK);
                 EmailInputTextbox.Text = "";

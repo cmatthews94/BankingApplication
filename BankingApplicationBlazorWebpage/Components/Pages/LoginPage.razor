@@ -34,7 +34,7 @@
     private void SendLoginRequest()
     {
         var foundUser = _bankUserService.GetUserByEmail(_emailAddress);
-        var result = _passwordHashingService.VerifyLoginDetails(foundUser.Password, _password);
+        var result = _passwordHashingService.VerifyPassword(foundUser.Password, _password);
         if (!result)
         {
             showLoginErrorAlert();

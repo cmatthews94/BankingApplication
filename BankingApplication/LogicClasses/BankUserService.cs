@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,32 +37,70 @@ namespace BankingApplication.LogicClasses
                 EmailAddress = email,
                 Password = passwordHash,
             };
-            _accountService.CreateNewAccount(newUser);
             _context.BankUsers.Add(newUser);
             _context.SaveChanges();
         }
+
+        public void AttachAccountToUser(string email, BankAccount account)
+        {
+            var result = GetUserByEmail(email);
+            _context.BankUsers.Attach(result);
+            result.UserAccounts.Add(account);
+            _context.Entry(result).Property(x => x.UserAccounts).IsModified = true;
+            _context.SaveChanges();
+
+        }
         public BankUser GetUserByEmail(string email)
         {
+            try
+            {
                 return _context.BankUsers
-                    .Include(a => a.UserAccounts)
-                    .First(i => i.EmailAddress == email);
-        }
-        public async Task<BankUser> GetUserByEmailAsync(string email)
-        {
-            return await _context.BankUsers
                 .Include(a => a.UserAccounts)
-                .FirstAsync(i => i.EmailAddress == email);
+                .First(i => i.EmailAddress == email);
+            }
+            catch
+            {
+                throw new Exception("No registered User found with provided e-mail");
+            }
         }
 
-        public void ChangeUserPassword(string email, string newPassword)
+        public async Task<BankUser> GetUserByEmailAsync(string email)
         {
-            var hashedPassword = _passwordHashingService.HashPassword(newPassword);
-            
-            _context.BankUsers
-                .Where(b => b.EmailAddress == email)
-                .ExecuteUpdate(u => u.SetProperty(b => b.Password, hashedPassword));
-            _context.SaveChanges();
+            try
+            {
+                return await _context.BankUsers
+                    .Include(a => a.UserAccounts)
+                    .FirstAsync(i => i.EmailAddress == email);
+            }
+            catch
+            {
+                throw new Exception("No registered User found with provided e-mail");
+            }
         }
+
+        public void ChangeUserPassword(string email,string currentPassword, string newPassword)
+        {
+            var user = GetUserByEmail(email);
+            if(!_passwordHashingService.VerifyPassword(_passwordHashingService.HashPassword(currentPassword), user.Password))
+            {
+                throw new Exception("provided password does not match current");
+            }
+
+            var hashedNewPassword = _passwordHashingService.HashPassword(newPassword);
+            user.Password = hashedNewPassword;
+
+            try
+            {
+                _context.BankUsers.Attach(user);
+                _context.Entry(user).Property(x => x.Password).IsModified = true;
+                _context.SaveChanges();
+            }
+            catch
+            {
+                throw new Exception("password change failure");
+            }
+        }
+
         public void DeleteUserByUserId(int userId)
         {
             _context.BankUsers

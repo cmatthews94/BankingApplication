@@ -10,7 +10,7 @@ namespace BankingApplication.Interfaces
     public interface IPasswordHashingService
     {
         string HashPassword(string password);
-        bool VerifyLoginDetails(string passwordHash, string inputPassword);
+        bool VerifyPassword(string passwordHash, string inputPassword);
         public bool VerifyIfEmailIsValid(string email);
     }
 }

@@ -17,24 +17,16 @@ namespace BankingApplication.LogicClasses
             _context = context;
         }
         //creates a new account attached to the user provided
-        public void CreateNewAccount(BankUser user)
+        public BankAccount CreateNewAccount(int ownerId)
         {
-            if (user.UserAccounts.Count() < 3)
+            var newAccount = new BankAccount()
             {
-                var newAccount = new BankAccount()
-                {
-                    UserId = user.UserId,
-                    Balance = 0.00m
-                };
-
-                user.UserAccounts.Add(newAccount);
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("user has reached maximum number of accounts");
-            }
+                UserId = ownerId,
+                Balance = 0,
+            };
+            return newAccount;
         }
+
         public BankAccount GetAccountByAccountNumber(int accountNumber)
         {
             if (_context.BankAccounts.FirstOrDefault(i => i.AccountNumber == accountNumber) != null)
